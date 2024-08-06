@@ -11,30 +11,6 @@ def start_chat():
     )
 
 
-async def call_gpt(message_history, settings: Settings):
-    settings = {
-        "model": settings.AZURE_OPENAI_CHAT_MODEL_NAME,
-        "temperature": 0,
-    }
-
-    stream = await llm.chat.completions.create(
-        messages=message_history, stream=True, **settings
-    )
-
-    final_answer = cl.Message(content="", author="Answer")
-
-    async for part in stream:
-        new_delta = part.choices[0].delta
-
-        if new_delta.content:
-            if not final_answer.content:
-                await final_answer.send()
-            await final_answer.stream_token(new_delta.content)
-
-    if final_answer.content:
-        await final_answer.update()
-
-
 @cl.on_message
 async def on_message(message: cl.Message):
     settings = Settings()

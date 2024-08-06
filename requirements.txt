@@ -1,4 +1,4 @@
-openai
-chainlit
-ast
-json
+chainlit==1.1.401
+openai==1.39.0
+pydantic_settings==2.4.0
+python-dotenv==1.0.1

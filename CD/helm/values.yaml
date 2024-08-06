@@ -1,0 +1,67 @@
+replicaCount: 1
+
+image:
+  repository: image-registry.openshift-image-registry.svc:5000/ocontant-dev/example/azureopenai-functions-streaming
+  tag: v1
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:
+    - host: example.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+env:
+  secretName: mychatbot-secrets
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+autoscaling:
+  enabled: false
+
+podAnnotations: {}
+podLabels: {}
+
+imagePullSecrets: []
+podSecurityContext: {}
+securityContext: {}
+
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8000
+  initialDelaySeconds: 3
+  periodSeconds: 3
+
+readinessProbe:
+  httpGet:
+    path: /readiness
+    port: 8000
+  initialDelaySeconds: 3
+  periodSeconds: 3
+
+volumeMounts: []
+volumes: []
+
+serviceAccount:
+  create: true
+  name: "mychatbot"
+
+rbac:
+  create: true
+

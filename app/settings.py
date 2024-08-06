@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 import dotenv
 
 
-env_path = ".env"
+env_path = "../.env"
 # Validate file access
 if not os.path.exists(env_path):
     print(f"Error: {env_path} file not found.")
